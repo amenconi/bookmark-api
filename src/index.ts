@@ -1,16 +1,15 @@
-import express from 'express';
+import dotenv from 'dotenv';
+import app from './config/express';
 
-const app = express();
+// Load environment variables
+dotenv.config();
+
+// Get port from environment or use default
 const PORT = process.env.PORT || 3001;
 
-// Middleware
-app.use(express.json());
-
-// Health check endpoint
-app.get('/health', (_req, res) => {
-  res.status(200).json({ status: 'ok' });
-});
-
+// Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(`📍 Health check available at http://localhost:${PORT}/health`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
 });
