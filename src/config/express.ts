@@ -2,6 +2,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { errorHandler, notFoundHandler } from '../middleware/errorHandler';
 import { config } from './env';
+import { registerRoutes } from '../routes';
 
 /**
  * Configure and return Express application with all middleware
@@ -36,19 +37,8 @@ export const configureExpress = (): Application => {
     next();
   });
 
-  // ===== Health Check Endpoint =====
-
-  app.get('/health', (_req: Request, res: Response) => {
-    res.status(200).json({
-      status: 'ok',
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-    });
-  });
-
   // ===== API Routes =====
-  // TODO: Add your API routes here
-  // Example: app.use('/api/bookmarks', bookmarkRoutes);
+  registerRoutes(app);
 
   // ===== Error Handling =====
 
